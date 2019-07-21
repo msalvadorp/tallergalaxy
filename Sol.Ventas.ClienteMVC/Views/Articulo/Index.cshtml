@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Sol.Ventas.DTO.Articulo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form data-ajax="true" data-ajax-update="#divLista" id="frmLista">
+    <div class="form-group ">
+        <label for="txtFiltro">Filtro por Nombre</label>
+        <div class="input-group">
+            <input type="text" name="miFiltro" id="txtFiltro" placeholder="ingrese el filtro" class="form-control">
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-info btn-flat">
+                    <i class="fa fa-search"></i>
+                    Buscar
+                </button>
+                <a asp-action="Editar" class="btn btn-info btn-flat">
+                    <i class="fa fa-minus"></i>  Agregar
+                </a>
+                <button type="button" data-url="/articulo/editarparcial?id=0" 
+                        class="btn btn-info btn-flat modalGalaxy">Nuevo Modal</button>
+            </span>
+        </div>
+    </div>
+    <div id="divLista">
+        @await Html.PartialAsync("_ListaArticulo", Model)
+    </div>
+
+</form>
+
+
+
+
+<script>
+    
+    //function editarModal(cod) {
+    //    $.get(
+    //        "/articulo/editarparcial",
+    //        { id: cod },
+    //        function (res) {
+    //            $(".seccionModal").html(res)
+    //            $(".contenedor").modal("show")
+    //        }
+    //        )
+    //}
+
+    function cerrarModal() {
+        $(".contenedor").modal("hide")
+        $("#frmLista").submit();
+    }
+</script>

@@ -1,0 +1,85 @@
+﻿@model Sol.Ventas.DTO.Articulo
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+@if (Model.Codigo == 0)
+{
+    <h1>Nuevo Articulo</h1>
+}
+else
+{
+    <h1>Editar articulo: @Model.Nombre</h1>
+}
+
+
+
+<h4>Articulo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @*@this.Html.ActionLink("Haga clic", "Index")
+            <a asp-action="Index">Haga clic</a>
+            <a href="/Index">Haga clic</a>*@
+
+        <form asp-action="Grabar" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="Nombre" class="control-label">Nombre</label>
+                @*<label asp-for="Nombre" class="control-label"></label>*@
+                @*<input asp-for="Nombre" class="form-control" />*@
+                <input type="text" class="form-control"
+        name="Nombre" id="Nombre" value="@Model.Nombre"
+        />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control demo" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                    Save2
+                </button>
+                <button type="button"
+                        id="btnValida"
+                        class="btn btn-warning">
+                    Validar Datos
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+<div id="seccion1">
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btnValida").click(function () {
+            var cod = document.getElementById("Codigo").value;
+            var cod = $("#Codigo").val();
+            var nom = $("#Nombre").val();
+            var pre = $("#Precio").val();
+            alert("Hola mundo")
+            $.get(
+                "/articulo/index",
+                function (resultado) {
+                    $("#seccion1").html(resultado)
+            })
+        })
+    })
+</script>

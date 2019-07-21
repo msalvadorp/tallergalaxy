@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Sol.Ventas.DTO.Articulo>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.ActionLink("Edicion", "Editar", new { id = item.Codigo }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    <button class="btn btn-primary"
+                            onclick="eliminar(@item.Codigo)">
+                        Eliminar
+                    </button>
+                    <button class="btn btn-primary modalGalaxy"
+                            data-url="/articulo/editarparcial?id=@item.Codigo"
+                             >
+                        Editar
+                    </button>
+
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    function eliminar(codigo) {
+
+        var confirma = confirm("seguro de eliminar?");
+        if (!confirma) {
+            return;
+        }
+            $.getJSON(
+                "@Url.Action("Eliminar", "Articulo")",
+                { id: codigo }, function (rpta) {
+                    if (rpta.res == "1") {
+                        alert("Datos grabados correctamente");
+                        $("#frmLista").submit();
+                    }
+                    else {
+                        alert("Hubo error: " + rpta.detalle);
+                    }
+                })
+        }
+</script>
